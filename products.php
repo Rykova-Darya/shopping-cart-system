@@ -20,7 +20,6 @@ if ($page - 1 >= 0) {
    $indexPosition = 0;
    $previous = 0;
 }
-
 if ($page + 1 <= $allPages) {
    $next = $page + 1;
 } else {
@@ -33,7 +32,6 @@ $recently_added_products = array_slice($recently_added_products, $indexPosition,
 
 <div class="container-fluid ">
    <div class="row">
-      <!--Хлебные крошки-->
       <div class="field-left field-top col-12">
          <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
@@ -46,14 +44,12 @@ $recently_added_products = array_slice($recently_added_products, $indexPosition,
          </nav>
       </div>
    </div>
-   <!--Заголовок страницы-->
    <div class="row">
       <div class="field-left catalog-title col-12">
          <h1>Платья и сарафаны</h1>
       </div>
    </div>
 </div>
-<!--Фильтры-->
 <div class="container-fluid container-filters">
    <div class="field-left row  filters">
       <div class="align-self-end col-xl-1 col-lg-1 col-md-1 col-sm-2 d-none d-sm-block ">
@@ -271,7 +267,6 @@ $recently_added_products = array_slice($recently_added_products, $indexPosition,
       </div>
    </div>
 </div>
-<!--Карточки товара-->
 <div class="container-fluid catalog-cards">
    <div class="justify-content-center field-left field-right row">
       <?php foreach ($recently_added_products as $product) : ?>
@@ -306,7 +301,7 @@ $recently_added_products = array_slice($recently_added_products, $indexPosition,
                   </div>
                   <div class=" product-size">
                      <select class="form-select product-size__btn" aria-label="Размер">
-                        <option selected>Размер</option>
+                        <option disabled selected>Размер</option>
                         <option value="1"><?= $product['size1'] ?></option>
                         <option value="2"><?= $product['size2'] ?></option>
                         <option value="3"><?= $product['size3'] ?></option>
@@ -316,14 +311,13 @@ $recently_added_products = array_slice($recently_added_products, $indexPosition,
                      </select>
                   </div>
                   <div class="">
-                     <a class="d-block add-button position-absolute bottom-0 end-0" role="button" href="#"></a>
+                     <button onclick="addIntoCart(event, <?= $product['id'] ?>)" class="d-block add-button position-absolute bottom-0 end-0"></button>
                   </div>
                </a>
             </div>
          </div>
       <?php endforeach; ?>
    </div>
-   <!--Пагинация-->
    <div class="justify-content-center pages row">
       <nav aria-label="Пример навигации по страницам">
          <ul class="pagination justify-content-center">
@@ -340,16 +334,41 @@ $recently_added_products = array_slice($recently_added_products, $indexPosition,
                <?php } ?>
             <?php } ?>
             <li class="page-item next">
-
                <a class="page-link" href="http://localhost:8080/sites/takeandhug/index.php?page=products&p=<?php echo $next; ?>" aria-label="Следующая">
                   <img src="images/arrow-right.svg" alt="Следующая" aria-hidden="true">
                </a>
-
             </li>
          </ul>
       </nav>
    </div>
 </div>
-
+<script>
+   {
+      "use strict";
+      window.addIntoCart = async (e, idTovar) => {
+         let parentElm = e.target.parentElement.parentElement;
+         let options = parentElm.querySelectorAll('select > option');
+         console.log(options);
+         let selectedOption = Array.from(options).filter(item => item.selected == true);
+         let infoData = {
+            action: 'addCart',
+            id_tovar: idTovar,
+            id_user: '101',
+            quantity: 1,
+            'size': selectedOption[0].text
+         };
+         let response = await fetch('/sites/takeandhug/api.php', {
+            method: 'POST',
+            headers: {
+               'Content-Type': 'text/plain;charset=UTF-8'
+            },
+            body: JSON.stringify(infoData)
+         });
+         let result = await response.text();
+         console.log(result);
+         location.reload();
+      }
+   }
+</script>
 
 <?= template_footer() ?>

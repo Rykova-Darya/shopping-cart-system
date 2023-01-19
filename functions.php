@@ -1,4 +1,5 @@
 <?php
+
 function pdo_connect_mysql()
 {
    // Подключиться к БД
@@ -13,13 +14,17 @@ function pdo_connect_mysql()
       exit('Failed to connect to database!');
    }
 }
-
-
 // Заголовок шаблона
 function template_header($title)
 {
-   // Получить количество товаров в корзине, чтобы отобразить их количество в хедере
-   $num_items_in_cart = isset($_SESSION['cart']) ? count($_SESSION['cart']) : 0;
+   // Вывод количества товаров в корзине в хедере
+   $pdo = pdo_connect_mysql();
+   $stmt = $pdo->prepare('SELECT * FROM orders WHERE date_added');
+   $stmt->execute();
+   $selected_products = $stmt->fetchAll(PDO::FETCH_ASSOC);
+   $num_product = array_column($selected_products, 'quantity');
+   $num_sum = array_sum($num_product);
+   $num_items_in_cart = $num_sum >= 1 ? $num_sum : 0;
    echo <<<EOT
    <!DOCTYPE html>
    <html lang="ru">
@@ -32,6 +37,7 @@ function template_header($title)
       <link rel="stylesheet" href="styles/style.css">
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css"/>
       <title>$title</title>
+      
    </head>
    
    <body>
@@ -257,10 +263,8 @@ function template_header($title)
                      <li class="nav-item">
                         <a class="nav-link" href="#"><span class="top-menu__list1">Контакты</span></a>
                      </li>
-                  </ul>
-   
-               </div>
-   
+                  </ul> 
+               </div>   
                <a class="navbar-brand d-xl-none d-xxl-none mx-auto" href="http://localhost:8080/sites/takeandhug/index.php?page=1"><img class="logo" src="images/logo.svg"
                      alt="Логотип «Взять и обнять»"></a>
                <ul class="office list-group list-group-horizontal field-right navbar-nav ms-0  mb-2 mb-lg-0">
@@ -275,8 +279,7 @@ function template_header($title)
                   </li>
                   <li class="me-2 nav-item position-relative">
                      <a class="office-cart" href="index.php?page=cart"><img class="office__icon" src="images/basket.svg" alt="Корзина"><span class="position-absolute top-0 end-0">$num_items_in_cart</span></a>
-                  </li>
-   
+                  </li>   
                </ul>
             </div>
          </nav>
@@ -392,8 +395,7 @@ function template_footer()
       integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
       crossorigin="anonymous"></script>
       <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
-      <script src="script/script.js"></script>
-      
+      <script src="script/script.js"></script>     
 </body>
 </html>
 EOT;

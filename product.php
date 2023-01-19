@@ -14,14 +14,11 @@ if (isset($_GET['id'])) {
    // Выведем предупреждение об ошибке, если идентификатор не был указан
    exit('Product does not exist!');
 }
-
 $dop = $pdo->prepare('SELECT * FROM takeandhug ORDER BY id DESC LIMIT 1');
 $dop->execute();
 $recently_added_products = $dop->fetchAll(PDO::FETCH_ASSOC);
 ?>
-
 <?= template_header($product['name']) ?>
-
 <div class="container-fluid ">
    <div class="row">
       <div class="field-top col-12 breadcrumb-div">
@@ -43,7 +40,9 @@ $recently_added_products = $dop->fetchAll(PDO::FETCH_ASSOC);
          <div class="card-slider__nav field-left slider-nav">
             <div class="slider-nav__item"><img class="img-fluid" src="images/<?= $product['img'] ?>" alt="<?= $product['name'] ?>"></div>
             <div class="slider-nav__item">
-               <?php if ($product['img_1'] != 0) {
+               <?php
+               $class = '';
+               if ($product['img_1'] != 0) {
                   $image = "images/" . $product['img_1'];
                } else {
                   $class = 'display: none';
@@ -52,7 +51,9 @@ $recently_added_products = $dop->fetchAll(PDO::FETCH_ASSOC);
                <img style="<?= $class ?>" class="img-fluid" src="<?= $image ?>" alt="<?= $product['name'] ?>">
             </div>
             <div class="slider-nav__item">
-               <?php if ($product['img_2'] != 0) {
+               <?php
+               $class2 = '';
+               if ($product['img_2'] != 0) {
                   $image = "images/" . $product['img_2'];
                } else {
                   $class2 = 'display: none';
@@ -60,20 +61,19 @@ $recently_added_products = $dop->fetchAll(PDO::FETCH_ASSOC);
                ?>
                <img style="<?= $class2 ?>" class="img-fluid" src="<?= $image ?>" alt="<?= $product['name'] ?>">
             </div>
-
-
          </div>
       </div>
       <div class="col-lg-4 col-12 col-sm-12 col-md-6 col-4__padding ">
          <div class="card-slider__block slider-block position-relative">
-
             <div class="swiper-wrapper">
                <div class="swiper-slide">
                   <div class="swiper-button-prev"></div>
                   <div class="swiper-button-next"></div>
                   <img src="images/<?= $product['img'] ?>" alt="<?= $product['name'] ?>">
                </div>
-               <?php if ($product['img_1'] != 0) {
+               <?php
+               $class3 = '';
+               if ($product['img_1'] != 0) {
                   $image2 = "images/" . $product['img_1'];
                } else {
                   $image3 = '';
@@ -85,7 +85,9 @@ $recently_added_products = $dop->fetchAll(PDO::FETCH_ASSOC);
                   <div class="swiper-button-next"></div>
                   <img class="img-fluid" src="<?= $image2 ?>" alt="<?= $product['name'] ?>">
                </div>
-               <?php if ($product['img_2'] != 0) {
+               <?php
+               $class4 = '';
+               if ($product['img_2'] != 0) {
                   $image3 = "images/" . $product['img_2'];
                } else {
                   $image3 = '';
@@ -139,153 +141,175 @@ $recently_added_products = $dop->fetchAll(PDO::FETCH_ASSOC);
                </ul>
             </div>
          </div>
-         <form action="index.php?page=cart" method="post">
-            <div class="row card-info__row">
-               <div class="col-12 card-info__div">
-                  <h6 class="card-info__size-title">Размер:</h6>
-               </div>
+         <div class="row card-info__row">
+            <div class="col-12 card-info__div">
+               <h6 class="card-info__size-title">Размер:</h6>
             </div>
-            <div class="row card-info__row">
-               <div class="col-12 card-info__div">
-                  <div class="card-info__radio-btn">
-                     <input id="radio-1" type="radio" name="radio" value="1" checked>
-                     <label for="radio-1"><?= $product['size1'] ?></label>
-                  </div>
+         </div>
+         <div class="row card-info__row">
+            <div class="radio col-12 card-info__div">
+               <div class="card-info__radio-btn">
+                  <input class="input-radio" id="radio-1" type="radio" name="radio" value="<?= $product['size1'] ?>" checked>
+                  <label for="radio-1"><?= $product['size1'] ?></label>
+               </div>
 
-                  <div class="card-info__radio-btn">
-                     <input id="radio-2" type="radio" name="radio" value="2">
-                     <label for="radio-2"><?= $product['size2'] ?></label>
-                  </div>
+               <div class="card-info__radio-btn">
+                  <input class="input-radio" id="radio-2" type="radio" name="radio" value="<?= $product['size2'] ?>">
+                  <label for="radio-2"><?= $product['size2'] ?></label>
+               </div>
 
-                  <div class="card-info__radio-btn">
-                     <input id="radio-3" type="radio" name="radio" value="3">
-                     <label for="radio-3"><?= $product['size3'] ?></label>
-                  </div>
-                  <div class="card-info__radio-btn">
-                     <input id="radio-4" type="radio" name="radio" value="4">
-                     <label for="radio-4"><?= $product['size4'] ?></label>
-                  </div>
-                  <div class="card-info__radio-btn">
-                     <input id="radio-5" type="radio" name="radio" value="5">
-                     <label for="radio-5"><?= $product['size5'] ?></label>
-                  </div>
-                  <div class="card-info__radio-btn">
-                     <input id="radio-6" type="radio" name="radio" value="6">
-                     <label for="radio-6"><?= $product['size6'] ?></label>
-                  </div>
+               <div class="card-info__radio-btn">
+                  <input class="input-radio" id="radio-3" type="radio" name="radio" value="<?= $product['size3'] ?>">
+                  <label for="radio-3"><?= $product['size3'] ?></label>
+               </div>
+               <div class="card-info__radio-btn">
+                  <input class="input-radio" id="radio-4" type="radio" name="radio" value="<?= $product['size4'] ?>">
+                  <label for="radio-4"><?= $product['size4'] ?></label>
+               </div>
+               <div class="card-info__radio-btn">
+                  <input class="input-radio" id="radio-5" type="radio" name="radio" value="<?= $product['size5'] ?>">
+                  <label for="radio-5"><?= $product['size5'] ?></label>
+               </div>
+               <div class="card-info__radio-btn">
+                  <input class="input-radio" id="radio-6" type="radio" name="radio" value="<?= $product['size6'] ?>">
+                  <label for="radio-6"><?= $product['size6'] ?></label>
                </div>
             </div>
-            <div class="row card-info__row">
-               <div class="col-12 card-info__div">
-                  <div class="card-info__size-table"><a class="" href="#">Таблица размеров</a>
-                  </div>
+         </div>
+         <div class="row card-info__row">
+            <div class="col-12 card-info__div">
+               <div class="card-info__size-table"><a class="" href="#">Таблица размеров</a>
                </div>
             </div>
-            <div class="row card-info__row">
-               <div class="col-12 card-info__div">
-                  <h6 class="card-info__num">Количество:</h6>
-               </div>
+         </div>
+         <div class="row card-info__row">
+            <div class="col-12 card-info__div">
+               <h6 class="card-info__num">Количество:</h6>
             </div>
-            <div class="row card-info__row">
-               <div class="col-12 card-info__div">
-
-
-                  <div class=" d-inline-flex card-info__num-all">
-                     <button id="minus" class="card-info__num-input card-info__num-button decrease" type="button">–</button>
-                     <input id="col" class="card-info__num-input" type="number" name="quantity" value="1" min="1" max="<?= $product['quantity'] ?>" placeholder="Quantity" required>
-                     <input type="hidden" name="product_id" value="<?= $product['id'] ?>">
-                     <button id="plus" class=" card-info__num-input card-info__num-button increase" type="button">+</button>
-                  </div>
-                  <button class="card-info__to-cart">ДОБАВИТЬ В КОРЗИНУ</button>
-         </form>
-
-      </div>
-   </div>
-   <div class="row card-info__row">
-      <div class="col-12 card-info__div">
-         <div class="accordion card-info__accordion" id="accordion">
-            <div class="accordion-item">
-               <h2 class="accordion-header" id="headingOne">
-                  <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">ОБ ИЗДЕЛИИ
-                  </button>
-               </h2>
-               <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordion">
-                  <div class="accordion-body">
-                     <p><?= $product['description'] ?></p>
-                  </div>
+         </div>
+         <div class="row card-info__row">
+            <div class="col-12 card-info__div">
+               <div class=" d-inline-flex card-info__num-all">
+                  <button id="minus" class="card-info__num-input card-info__num-button decrease" type="button">–</button>
+                  <input id="col" class="card-info__num-input" type="number" name="quantity" value="1" min="1" max="10" placeholder="Quantity" required>
+                  <button id="plus" class=" card-info__num-input card-info__num-button increase" type="button">+</button>
                </div>
+               <button onclick="addIntoCart(event, <?= $product['id'] ?>)" class="card-info__to-cart">ДОБАВИТЬ В КОРЗИНУ</button>
             </div>
-            <div class="accordion-item">
-               <h2 class="accordion-header" id="headingTwo">
-                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                     СОСТАВ
-                  </button>
-               </h2>
-               <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
-                  <div class="accordion-body">
-                     <?= $product['structure'] ?>
-                  </div>
-               </div>
-            </div>
-            <div class="accordion-item">
-               <h2 class="accordion-header" id="headingThree">
-                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                     УХОД
-                  </button>
-               </h2>
-               <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
-                  <div class="accordion-body d-flex justify-content-center">
-                     <div class="accordion-body__icon d-inline-flex" data-title="Стирка в обычном режиме с температурой не выше 40 градусов"><img src="images/<?= $product['care'] ?>" alt="Стирка в обычном режиме с температурой не выше 40 градусов">
+         </div>
+         <div class="row card-info__row">
+            <div class="col-12 card-info__div">
+               <div class="accordion card-info__accordion" id="accordion">
+                  <div class="accordion-item">
+                     <h2 class="accordion-header" id="headingOne">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">ОБ ИЗДЕЛИИ
+                        </button>
+                     </h2>
+                     <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordion">
+                        <div class="accordion-body">
+                           <p><?= $product['description'] ?></p>
+                        </div>
                      </div>
-                     <div class="accordion-body__icon d-inline-flex" data-title="Изделие можно гладить при средней температуре"><img src="images/<?= $product['care_2'] ?>" alt="Mожно гладить при средней температуре">
+                  </div>
+                  <div class="accordion-item">
+                     <h2 class="accordion-header" id="headingTwo">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                           СОСТАВ
+                        </button>
+                     </h2>
+                     <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                           <?= $product['structure'] ?>
+                        </div>
                      </div>
-                     <div class="accordion-body__icon d-inline-flex" data-title="Химчистка запрещена"><img src="images/<?= $product['care_3'] ?>" alt="Химчистка запрещена">
+                  </div>
+                  <div class="accordion-item">
+                     <h2 class="accordion-header" id="headingThree">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                           УХОД
+                        </button>
+                     </h2>
+                     <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                        <div class="accordion-body d-flex justify-content-center">
+                           <div class="accordion-body__icon d-inline-flex" data-title="Стирка в обычном режиме с температурой не выше 40 градусов"><img src="images/<?= $product['care'] ?>" alt="Стирка в обычном режиме с температурой не выше 40 градусов">
+                           </div>
+                           <div class="accordion-body__icon d-inline-flex" data-title="Изделие можно гладить при средней температуре"><img src="images/<?= $product['care_2'] ?>" alt="Mожно гладить при средней температуре">
+                           </div>
+                           <div class="accordion-body__icon d-inline-flex" data-title="Химчистка запрещена"><img src="images/<?= $product['care_3'] ?>" alt="Химчистка запрещена">
+                           </div>
+                        </div>
                      </div>
                   </div>
                </div>
             </div>
          </div>
-      </div>
-   </div>
-   <div class="row card-info__row">
-      <div class="col-12 card-info__div">
-         <h2 class="card-info__extra">Дополни образ</h2>
-      </div>
-   </div>
-   <div class="row card-info__row">
-      <?php foreach ($recently_added_products as $dop_prod) : ?>
-         <div class="col-6 card-info__div">
-            <div class="position-relative card-product card-product__mini">
-               <a class="" href="http://localhost:8080/sites/takeandhug/index.php?page=product&id=<?= $dop_prod['id'] ?>">
-                  <div class="position-absolute top-0 end-0 product-favorite">
-                     <a href="#"><img class="product-favorite__img" src="images/favourites.svg" alt="Избранное"></a>
-                  </div>
-                  <div class="product-thumb">
-                     <a class href="http://localhost:8080/sites/takeandhug/index.php?page=product&id=<?= $dop_prod['id'] ?>"><img class="product-image d-block" src="images/<?= $dop_prod['img'] ?>" alt="<?= $dop_prod['img'] ?>"></a>
-                  </div>
-                  <div class="product-title">
-                     <h4>
-                        Панама «Солнышко»
-                     </h4>
-                  </div>
-                  <div class="product-price product-price__mini">
-                     <span>
-                        <?= $dop_prod['price'] . "руб."; ?>
-                        <small>
-                           <?php if (intval($dop_prod['rrp']) > 0) {
-                              echo $dop_prod['rrp'] . "руб.";
-                           }
-                           ?>
-                        </small>
-                     </span>
-                  </div>
-               </a>
+         <div class="row card-info__row">
+            <div class="col-12 card-info__div">
+               <h2 class="card-info__extra">Дополни образ</h2>
             </div>
          </div>
-      <?php endforeach; ?>
+         <div class="row card-info__row">
+            <?php foreach ($recently_added_products as $dop_prod) : ?>
+               <div class="col-6 card-info__div">
+                  <div class="position-relative card-product card-product__mini">
+                     <a class="" href="http://localhost:8080/sites/takeandhug/index.php?page=product&id=<?= $dop_prod['id'] ?>">
+                        <div class="position-absolute top-0 end-0 product-favorite">
+                           <a href="#"><img class="product-favorite__img" src="images/favourites.svg" alt="Избранное"></a>
+                        </div>
+                        <div class="product-thumb">
+                           <a class href="http://localhost:8080/sites/takeandhug/index.php?page=product&id=<?= $dop_prod['id'] ?>"><img class="product-image d-block" src="images/<?= $dop_prod['img'] ?>" alt="<?= $dop_prod['img'] ?>"></a>
+                        </div>
+                        <div class="product-title">
+                           <h4>
+                              Панама «Солнышко»
+                           </h4>
+                        </div>
+                        <div class="product-price product-price__mini">
+                           <span>
+                              <?= $dop_prod['price'] . "руб."; ?>
+                              <small>
+                                 <?php if (intval($dop_prod['rrp']) > 0) {
+                                    echo $dop_prod['rrp'] . "руб.";
+                                 }
+                                 ?>
+                              </small>
+                           </span>
+                        </div>
+                     </a>
+                  </div>
+               </div>
+            <?php endforeach; ?>
+         </div>
+      </div>
    </div>
 </div>
-</div>
-
-</div>
+<script>
+   {
+      "use strict";
+      window.addIntoCart = async (e, idTovar) => {
+         let options = document.querySelectorAll('.input-radio');
+         let selectedOption = Array.from(options).filter(radio => radio.checked == true);
+         console.log(selectedOption);
+         let quantity = document.querySelectorAll('#col');
+         console.log(quantity);
+         let infoData = {
+            action: 'addCart',
+            id_tovar: idTovar,
+            id_user: '101',
+            quantity: quantity[0].value,
+            'size': selectedOption[0].value
+         };
+         let response = await fetch('/sites/takeandhug/api.php', {
+            method: 'POST',
+            headers: {
+               'Content-Type': 'text/plain;charset=UTF-8'
+            },
+            body: JSON.stringify(infoData)
+         });
+         let result = await response.text();
+         console.log(result);
+         location.reload();
+      }
+   }
+</script>
 <?= template_footer() ?>

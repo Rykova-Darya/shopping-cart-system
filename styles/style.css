@@ -247,6 +247,9 @@ height: 135px;
    color:#C75348;
 }
 
+.contacts__social {
+   padding-top: 8px;
+}
 .social {
    margin-top: 20px;
 }
@@ -472,6 +475,7 @@ padding-left: 12px;
 .card-product {
    border: 1px solid #C85448;
    border-radius: 20px;
+   /*width: 285px;*/
 }
 
 .card-product:hover {
@@ -540,6 +544,21 @@ padding-left: 12px;
    margin-right: 5px;
 }
 
+.product__color {
+   padding-left: 10px;
+}
+
+.product__color-li {
+   height: 12px;
+   width: 12px;
+   border-radius: 50px;
+   margin-right: 5px;
+}
+
+.product__color-li--active {
+   border: 1px solid #C75348;
+}
+
 .product-size {
    padding-left: 10px;
    margin-bottom: 20px;
@@ -573,6 +592,11 @@ outline-width: 0!important;
 outline-style: none!important;
 box-shadow: 0 0 0 0 rgba(0,123,255,0)!important;
 }
+
+/*.product-size__list {
+   background-color: #FDFAF1;
+   min-width: inherit;
+}*/
 
 .option-item {
    font-family: 'Montserrat', sans-serif;
@@ -1231,6 +1255,7 @@ background-color: #C85448 !important;
 }
 
 .accordion-button::after , .accordion-button:not(.collapsed)::after {
+  /* background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23212529'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");*/
 background-image: url(../images/arrow_down.svg);
 background-position: center;
 }
@@ -1268,12 +1293,12 @@ background-position: center;
 
 .accordion-body__icon:hover::after { 
    position: absolute;
-   width: 300px; 
+   width: 300px; /* Абсолютное позиционирование */
    content: attr(data-title); 
    right: -100%;
-   top: 120%; 
-   z-index: 1; 
-   background: #FDFAF1; 
+   top: 120%; /* Положение подсказки */
+   z-index: 1; /* Отображаем подсказку поверх других элементов */
+   background: #FDFAF1; /* Полупрозрачный цвет фона */
    font-family: 'Montserrat', sans-serif;
    font-weight: 400;
    font-size: 14px;
@@ -1281,7 +1306,7 @@ background-position: center;
    border: 1px solid #BBC19B;
    border-radius: 5px;
    box-shadow: 0px 1px 2px #ACACAC;
-   padding: 5px;
+   padding: 5px;/* Параметры рамки */
   }
 
 .card-info__extra {
@@ -1315,6 +1340,7 @@ background-position: center;
 
 .cart-product {
    display: flex;
+   /*border: 1px solid #382519;*/
 }
 
 .border-bot {
@@ -1337,6 +1363,7 @@ background-position: center;
 
 .cart-product__wrapper {
    display: flex;
+  /* flex-grow: 1; */
    position: relative;
    padding-left: 15px;
 }
@@ -1376,6 +1403,9 @@ background-position: center;
 }
 
 .input-quantity__wrap-btn {
+   /*width: 20px;*/
+   /*border: 0.5px solid #778C42;
+   border-radius: 10px;*/
    border: none;
    background: #FDFAF1;
    font-family: 'Montserrat', sans-serif;
@@ -1475,11 +1505,13 @@ background-position: center;
    padding-bottom: 10px;
 }
 
-.cart-item__delete a {
+.cart-item__delete button {
    font-family: 'Montserrat', sans-serif;
    font-weight: 400;
    font-size: 14px;
    color: #C85448;
+   border: none;
+   background-color: transparent;
 }
 
 .cart-item__delete span {
@@ -1675,6 +1707,9 @@ color: #382519;
       font-size: 12px;
    }
 
+
+ 
+
 .ss2023 {
    padding-top: 20px;
 }
@@ -1802,6 +1837,8 @@ color: #382519;
    padding-top: 18px;
    font-size: 20px;
 }
+
+
 
 .card-info__color {
    padding-top: 20px;
@@ -1969,6 +2006,18 @@ color: #382519;
    padding-right: 30px;
 }
 
+/*Карточка продукта*/
+/*.card-info__size-a {
+   font-family: 'Montserrat', sans-serif;
+   font-weight: 500;
+   font-size: 16px;
+   border: 0.5px solid #778C42;
+   padding: 10px 25px;
+   color: #382519;
+   background-color: #FDFAF1;
+   border-radius: 20px;
+   margin-left: 15px;
+}*/
 
 /*Страница товара*/
 .breadcrumb-div {
@@ -2046,7 +2095,11 @@ color: #382519;
    font-size: 40px;
    margin-bottom: 30px;
 }
+
+
 }
+
+
 
 @media (min-width: 576px) and (max-width: 767.98px) {
       
@@ -2239,6 +2292,7 @@ height: 12px;
    font-size: 28px;
 }
 
+
 .product-favorite__img {
    height: 30px;
 }
@@ -2261,6 +2315,9 @@ height: 12px;
    margin-right: 2px;
 }
 
+/*.product-size__btn {
+   padding: 2px;
+}*/
 .add-button {
    padding: 25px;
 }
@@ -2722,6 +2779,10 @@ padding-top: 16px;
    margin-right: 2px;
 }
 
+/*.product-size__btn {
+   padding: 2px;
+}*/
+
 .add-button {
    padding: 25px;
 }
@@ -2762,6 +2823,9 @@ padding-top: 16px;
    font-size: 10px;
    padding-bottom: 45px;
 }
+
+/*Каталог*/
+/*Хлебные крошки*/
 
 .field-top {
    padding-top: 30px;
@@ -2915,6 +2979,7 @@ padding-top: 16px;
 
 .card-info__num-all {
    padding: 4px;
+   margin-bottom: 20px;
 }
 
 .card-info__num-input {
@@ -2964,7 +3029,7 @@ padding-top: 16px;
     height: 146px;
     width: auto;
     border-radius: 10px;
-   margin-top: 10px;
+    margin-top: 10px;
 }
 
 .cart-product__wrapper-xs {

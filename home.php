@@ -20,22 +20,14 @@ if ($page - 1 >= 0) {
    $indexPosition = 0;
    $previous = 0;
 }
-
 if ($page + 1 <= $allPages) {
    $next = $page + 1;
 } else {
    $next = $page;
 }
 $recently_added_products = array_slice($recently_added_products, $indexPosition, 3);
-
-
-
-
 ?>
-
 <?= template_header('Взять и обнять') ?>
-
-
 <!--Обложка-->
 <div class="container-fluid cover">
    <div class="row cover__row">
@@ -178,29 +170,28 @@ $recently_added_products = array_slice($recently_added_products, $indexPosition,
                         </small>
                      </span>
                   </div>
-                  <div class="product-color">
-                     <img class="img-fluid product-color--space" src="images/yellow.svg" alt="желтый">
-                     <img class="img-fluid product-color--space" src="images/white.svg" alt="белый">
-                     <img class="img-fluid product-color--space" src="images/green.svg" alt="зелёный">
-                     <img class="img-fluid product-color--space" src="images/black.svg" alt="чёрный">
-                  </div>
-
+                  <ul class="product__color">
+                     <li class="product__color-li d-inline-flex" style="background-color: #EAE118;"><a class="card-info__color-button" href="#"></a></li>
+                     <li class="product__color-li product__color-li--active d-inline-flex" <?= $product['color'] ?>></li>
+                     <li class="product__color-li d-inline-flex" style="background-color: #3D8B0E;"><a class="card-info__color-button" href="#"></a>
+                     </li>
+                     <li class="product__color-li d-inline-flex" style="background-color: #9457EB;"><a class="card-info__color-button" href="#"></a>
+                     </li>
+                  </ul>
                   <div class=" product-size">
-                     <select class="form-select product-size__btn" aria-label="Размер">
-                        <option selected>Размер</option>
-                        <option value="1"><?= $product['size1'] ?></option>
-                        <option value="2"><?= $product['size2'] ?></option>
-                        <option value="3"><?= $product['size3'] ?></option>
-                        <option value="4"><?= $product['size4'] ?></option>
-                        <option value="5"><?= $product['size5'] ?></option>
-                        <option value="6"><?= $product['size6'] ?></option>
+                     <select id="select" class="form-select product-size__btn" aria-label="Размер">
+                        <option class="option" selected disabled>Размер</option>
+                        <option class="option" value="1"><?= $product['size1'] ?></option>
+                        <option class="option" value="2"><?= $product['size2'] ?></option>
+                        <option class="option" value="3"><?= $product['size3'] ?></option>
+                        <option class="option" value="4"><?= $product['size4'] ?></option>
+                        <option class="option" value="5"><?= $product['size5'] ?></option>
+                        <option class="option" value="6"><?= $product['size6'] ?></option>
                      </select>
                   </div>
-                  <form action="index.php?page=cart" method="post">
-                     <div class="">
-                        <a class="d-block add-button position-absolute bottom-0 end-0" role="button" href="#"></a>
-                     </div>
-                  </form>
+                  <div class="">
+                     <button onclick="addIntoCart(event, <?= $product['id'] ?>)" class="d-block add-button position-absolute bottom-0 end-0"></button>
+                  </div>
                </a>
             </div>
          </div>
@@ -214,7 +205,6 @@ $recently_added_products = array_slice($recently_added_products, $indexPosition,
                <li class="page-item last">
                   <a class="page-link" href="http://localhost:8080/sites/takeandhug/index.php?page=<?php echo $previous; ?>" aria-label="Предыдущая">
                      <img class="img-fluid" src="images/arrow-left.svg" alt="Предыдущая" aria-hidden="true">
-
                   </a>
                </li>
                <?php for ($i = 1; $i <= $allPages; $i++) { ?>
@@ -233,7 +223,6 @@ $recently_added_products = array_slice($recently_added_products, $indexPosition,
                </li>
             </ul>
          </nav>
-
       </div>
    </div>
 </div>
@@ -268,6 +257,32 @@ $recently_added_products = array_slice($recently_added_products, $indexPosition,
       </div>
    </div>
 </div>
-
-
+<script>
+   {
+      "use strict";
+      window.addIntoCart = async (e, idTovar) => {
+         let parentElm = e.target.parentElement.parentElement;
+         let options = parentElm.querySelectorAll('select > option');
+         console.log(options);
+         let selectedOption = Array.from(options).filter(item => item.selected == true);
+         let infoData = {
+            action: 'addCart',
+            id_tovar: idTovar,
+            id_user: '101',
+            quantity: 1,
+            'size': selectedOption[0].text
+         };
+         let response = await fetch('/sites/takeandhug/api.php', {
+            method: 'POST',
+            headers: {
+               'Content-Type': 'text/plain;charset=UTF-8'
+            },
+            body: JSON.stringify(infoData)
+         });
+         let result = await response.text();
+         console.log(result);
+         location.reload();
+      }
+   }
+</script>
 <?= template_footer() ?>

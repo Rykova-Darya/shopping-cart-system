@@ -1,10 +1,9 @@
+
 // Фильтр "Цена"
 const rangeInput = document.querySelectorAll(".range-input input");
 priceInput = document.querySelectorAll(".price__input input");
 progress = document.querySelector(".price__slider .price__progress")
-
 let priceGap = 1000;
-
 priceInput.forEach(input => {
    input.addEventListener("input", e => {
       let minVal = parseInt(priceInput[0].value),
@@ -39,11 +38,8 @@ rangeInput.forEach(input => {
       }
    });
 });
-
-
-
 // Слайдер на странице продукта (product.php)
-let swiper = new Swiper('.slider-block', {
+const swiper = new Swiper('.slider-block', {
    slidesPerView: 1,
    // Navigation arrows
    navigation: {
@@ -65,24 +61,23 @@ sliderNavItems.forEach((el, index) => {
       swiper.slideTo(index);
    });
 });
-
 // Счетчик на странице продукта (product.php)
-let col = document.getElementById('col');
-let plus = document.getElementById('plus');
-let minus = document.getElementById('minus');
-
-plus.onclick = function () {
-   col.value = parseInt(col.value) + 1;
-}
-
-minus.onclick = function () {
-   col.value = parseInt(col.value) - 1;
-}
-
-
-
+document.addEventListener('click', function (e) {
+   if (e.target.classList.contains("increase")) {
+      if (e.target.parentElement.querySelector("input").value >= 1 && e.target.parentElement.querySelector("input").value < 10) {
+         ++e.target.parentElement.querySelector("input").value;
+      }
+   } else if (e.target.classList.contains("decrease")) {
+      if (e.target.parentElement.querySelector("input").value <= 10 && e.target.parentElement.querySelector("input").value > 1) {
+         --e.target.parentElement.querySelector("input").value;
+      }
+   }
+});
 // Всплывающие подсказки на странице продукта (product.php)
 var tooltipTriggerList = Array.prototype.slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
 var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
    return new bootstrap.Tooltip(tooltipTriggerEl)
-})
+});
+
+
+
